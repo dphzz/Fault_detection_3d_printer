@@ -1,5 +1,11 @@
 test_folder/
+test_folder2/
+
 Segmentation_py/.git_old
 Segmentation_py/.gitignore_old
 Segmentation_py/test_image/
+Segmentation_py/__pycache__/
+
 File_mornitoring/test_folder/
+
+Octoprint_API/.git_old
