@@ -27,7 +27,13 @@ if __name__ == "__main__":
     #OctoprintAPI section end------------------------------------------
 
     #This section is for file control-----------------------------
-    path_to_watch = "./test_folder"
+    
+    #Declare the path to check for files
+    path_to_watch = r"Z:"           #Production code
+    #path_to_watch = "./test_folder" #Testing code  
+    #End path to check for files
+    
+    
     before = dict ([(f, None) for f in os.listdir (path_to_watch)])
     #File control section end-------------------------------------
     while 1:
