@@ -21,7 +21,7 @@ def Img_processing(link1, link2):
     img2 = cv2.imread(link2)
     img2 = cv2.resize(img2, [500, 400])
 
-    region_of_interest = [(115, 400), (115, 175), (230, 30), (390, 30), (390, 400)]                  #Tọa độ các đỉnh vùng ảnh cần drop
+    region_of_interest = [(115, 320), (100, 70), (170, 0), (380, 0), (380, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
     region_of_interest = np.array([region_of_interest], np.int32)
 
     #--------------------------------------------------------------------------
@@ -46,18 +46,18 @@ def Img_processing(link1, link2):
     morpho_img2 = cv2.morphologyEx(blur_img2, cv2.MORPH_OPEN, kernel)
 
     #Tìm tọa độ bounding box
-    maxrong1 = maxdai1 = maxrong2 = maxdai2 = 270
-    minrong1 = mindai1 = minrong2 = mindai2 =400
+    maxrong1 = maxdai1 = maxrong2 = maxdai2 = 0
+    minrong1 = mindai1 = minrong2 = mindai2 = 400
     for i in range(400):
         for j in range(500):
             if morpho_img1[i][j] != 0:
                 if i <= mindai1:
                     mindai1 = i
-                elif i >= maxdai1:
+                if i >= maxdai1:
                     maxdai1 = i
-                elif j <= minrong1:
+                if j <= minrong1:
                     minrong1 = j
-                elif j >= maxrong1:
+                if j >= maxrong1:
                     maxrong1 = j
 
     for i in range(400):
@@ -65,11 +65,11 @@ def Img_processing(link1, link2):
             if morpho_img2[i][j] != 0:
                 if i <= mindai2:
                     mindai2 = i
-                elif i >= maxdai2:
+                if i >= maxdai2:
                     maxdai2 = i
-                elif j <= minrong2:
+                if j <= minrong2:
                     minrong2 = j
-                elif j >= maxrong2:
+                if j >= maxrong2:
                     maxrong2 = j
 
     # Tính diện tích bouding box và tỉ lệ bb của 2 layer kế tiếp nhau
@@ -77,14 +77,14 @@ def Img_processing(link1, link2):
     s2 = (maxdai2 - mindai2) * (maxrong2 - minrong2)
 
     #Tính vị trí tâm bounding box
-    img1 = cv2.rectangle(img1, [minrong1, mindai1], [maxrong1, maxdai1], (0, 0, 255), 3)        #Vẽ bouding box
+    img1 = cv2.rectangle(img1, [minrong1, mindai1], [maxrong1, maxdai1], (0, 0, 255), 2)        #Vẽ bouding box
     center1 = [int((maxrong1 + minrong1) / 2), int((maxdai1 + mindai1) / 2)]                                 #Xác định tọa độ tâm
-    img2 = cv2.rectangle(img2, [minrong2, mindai2], [maxrong2, maxdai2], (0, 0, 255), 3)  # Vẽ bouding box
+    img2 = cv2.rectangle(img2, [minrong2, mindai2], [maxrong2, maxdai2], (0, 255, 0), 2)  # Vẽ bouding box
     center2 = [int((maxrong2 + minrong2) / 2), int((maxdai2 + mindai2) / 2)]
 
     # Vẽ tâm
     img1 = cv2.circle(img1, center1, 5, [0, 0, 255], -1)
-    img2 = cv2.circle(img2, center2, 5, [0, 0, 255], -1)
+    img2 = cv2.circle(img2, center2, 5, [0, 2555, 0], -1)
 
     # Đếm số pixel trắng và hiêu 2 giữa layer
     count_pixel1 = 0
@@ -145,16 +145,20 @@ def Compare(center_distance, ratio, hieu):
     if center_distance > 20:
         print("Lỗi vật bị bong ra khỏi bàn in")
         return 1
-    if hieu > 3500 or ratio > 2:
+    if hieu > 3500 or ratio > 1.2:
         print("Lỗi đầu in không bám theo quỹ đạo mong muốn")
         return 2
-    if center_distance <20 and hieu < 3500 and ratio < 2:
+    if center_distance <20 and hieu < 3500 and ratio < 1.2:
         print("Continue")
         return 0
 
 #This part is used to debug this library.
 if __name__ == "__main__":
-    first_img = "./test_image/Cable_clip000035.jpg"
-    second_img = "./test_image/Cable_clip000036.jpg"
+    first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000005.jpg"
+    second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000006.jpg"
+    # first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
+    # second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
+
+
     s1,s2,center1,center2,white1,white2 = Img_processing(first_img, second_img)
     Caculate(s1,s2,center1,center2,white1,white2)
