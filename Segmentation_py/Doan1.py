@@ -21,7 +21,7 @@ def Img_processing(link1, link2):
     img2 = cv2.imread(link2)
     img2 = cv2.resize(img2, [500, 400])
 
-    region_of_interest = [(115, 320), (100, 70), (170, 0), (380, 0), (380, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
+    region_of_interest = [(115, 320), (100, 70), (185, 0), (380, 0), (380, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
     region_of_interest = np.array([region_of_interest], np.int32)
 
     #--------------------------------------------------------------------------
@@ -41,7 +41,7 @@ def Img_processing(link1, link2):
     blur_img2 = cv2.medianBlur(threshold_img2, 5)
 
     # morohological
-    kernel = np.ones([5,10],np.uint8)
+    kernel = np.ones([5,5],np.uint8)
     morpho_img1 = cv2.morphologyEx(blur_img1, cv2.MORPH_OPEN, kernel)
     morpho_img2 = cv2.morphologyEx(blur_img2, cv2.MORPH_OPEN, kernel)
 
@@ -154,8 +154,8 @@ def Compare(center_distance, ratio, hieu):
 
 #This part is used to debug this library.
 if __name__ == "__main__":
-    first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000005.jpg"
-    second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000006.jpg"
+    first_img   = r"Z:\screwdriver_case_kn_body000046.jpg"
+    second_img  = r"Z:\screwdriver_case_kn_body000047.jpg"
     # first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
     # second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
 
