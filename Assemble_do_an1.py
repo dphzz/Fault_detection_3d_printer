@@ -26,18 +26,18 @@ if __name__ == "__main__":
     
     #OctoprintAPI section end------------------------------------------
 
-    #This section is for file control-----------------------------
+    #This section is for file control-----------------------------------
     
-    #Declare the path to check for files
+    #Declare the path to check for files---------------------------
     path_to_watch = r"Z:"           #Production code
     #path_to_watch = "./test_folder" #Testing code  
-    #End path to check for files
+    #End path to check for files-------------------------------------
     
     
     before = dict ([(f, None) for f in os.listdir (path_to_watch)])
-    #File control section end-------------------------------------
+    #File control section end--------------------------------------------
     while 1:
-        #   time.sleep (10)
+        #   time.sleep (10) #Disable this for continuous checking
         after = dict ([(f, None) for f in os.listdir (path_to_watch)])
         added = [f for f in after if not f in before]
         removed = [f for f in before if not f in after]
@@ -57,7 +57,7 @@ if __name__ == "__main__":
             
             #Determine whether to stop the print or not.
             if print_status != 0:
-                #prusa_printer.pause()
+                #prusa_printer.pause()  #This directly control the printer, disable when not in used. 
                 print("Error has occured, pause print!")
                 break
             else:
