@@ -16,10 +16,10 @@ def Img_processing(link1, link2):
         return masked_image
 
     img1 = cv2.imread(link1)
-    img1 = cv2.resize(img1,[500,400])
+    img1 = cv2.resize(img1,[448,448])
 
     img2 = cv2.imread(link2)
-    img2 = cv2.resize(img2, [500, 400])
+    img2 = cv2.resize(img2, [448, 448])
 
     region_of_interest = [(115, 320), (100, 70), (185, 0), (380, 0), (380, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
     region_of_interest = np.array([region_of_interest], np.int32)
