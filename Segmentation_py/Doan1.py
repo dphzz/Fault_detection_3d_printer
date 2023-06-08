@@ -15,13 +15,16 @@ def Img_processing(link1, link2):
         masked_image = cv2.bitwise_and(image, mask)
         return masked_image
 
+    DEFINE_MAX_X = 448
+    DEFINE_MAX_Y = 448
+
     img1 = cv2.imread(link1)
-    img1 = cv2.resize(img1,[448,448])
+    img1 = cv2.resize(img1,[DEFINE_MAX_X,DEFINE_MAX_Y])
 
     img2 = cv2.imread(link2)
-    img2 = cv2.resize(img2, [448, 448])
+    img2 = cv2.resize(img2, [DEFINE_MAX_X, DEFINE_MAX_Y])
 
-    region_of_interest = [(115, 320), (100, 70), (185, 0), (380, 0), (380, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
+    region_of_interest = [(115, 320), (100, 127), (185, 0), (350, 0), (350, 320)]                  #Tọa độ các đỉnh vùng ảnh cần drop
     region_of_interest = np.array([region_of_interest], np.int32)
 
     #--------------------------------------------------------------------------
@@ -47,9 +50,9 @@ def Img_processing(link1, link2):
 
     #Tìm tọa độ bounding box
     maxrong1 = maxdai1 = maxrong2 = maxdai2 = 0
-    minrong1 = mindai1 = minrong2 = mindai2 = 400
-    for i in range(400):
-        for j in range(500):
+    minrong1 = mindai1 = minrong2 = mindai2 = DEFINE_MAX_X
+    for i in range(DEFINE_MAX_X):
+        for j in range(DEFINE_MAX_Y):
             if morpho_img1[i][j] != 0:
                 if i <= mindai1:
                     mindai1 = i
@@ -60,8 +63,8 @@ def Img_processing(link1, link2):
                 if j >= maxrong1:
                     maxrong1 = j
 
-    for i in range(400):
-        for j in range(500):
+    for i in range(DEFINE_MAX_X):
+        for j in range(DEFINE_MAX_Y):
             if morpho_img2[i][j] != 0:
                 if i <= mindai2:
                     mindai2 = i
@@ -154,10 +157,10 @@ def Compare(center_distance, ratio, hieu):
 
 #This part is used to debug this library.
 if __name__ == "__main__":
-    first_img   = r"Z:\screwdriver_case_kn_body000046.jpg"
-    second_img  = r"Z:\screwdriver_case_kn_body000047.jpg"
-    # first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
-    # second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\Cable_clip000035.jpg"
+    # first_img   = r"Z:\screwdriver_case_kn_body000046.jpg"
+    # second_img  = r"Z:\screwdriver_case_kn_body000047.jpg"
+    first_img   = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000005.jpg"
+    second_img  = r"G:\Shared drives\Ngo_Duc_Phu\Do_an_1\Python_code\Segmentation_py\test_image\screwdriver_case_kn_body000006.jpg"
 
 
     s1,s2,center1,center2,white1,white2 = Img_processing(first_img, second_img)
