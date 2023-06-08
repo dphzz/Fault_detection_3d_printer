@@ -57,7 +57,7 @@ if __name__ == "__main__":
             
             #Determine whether to stop the print or not.
             if print_status != 0:
-                #prusa_printer.pause()  #This directly control the printer, disable when not in used. 
+                prusa_printer.pause()  #This directly control the printer, disable when not in used. 
                 print("Error has occured, pause print!")
                 break
             else:
