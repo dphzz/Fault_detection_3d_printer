@@ -9,6 +9,8 @@ file_ls = os.listdir(PATH_TO_WATCH_DATA)
 # print(file_ls)
 formatted_data = []
 # i = 0
+
+#Grag the name of the .jpg file and add .txt to the name of the file
 for name in file_ls:
     tmp_formatted_data = [1,2]
     tmp_formatted_data[0] = name
